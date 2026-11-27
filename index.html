@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- idioma da página: inglês -->
+<head>
+  <meta charset="UTF-8"> <!-- permite acentos e emojis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- funciona bem em celular -->
+  <title>Liar Hunter - Detective Interrogation Game</title> <!-- título na aba do navegador -->
+  <link rel="stylesheet" href="style.css"> <!-- liga o arquivo de estilos -->
+</head>
+<body>
+
+  <!-- ================= TELA 1: MENU INICIAL ================= -->
+  <section id="screen-menu" class="screen active"> <!-- "active" = tela visível -->
+    <div class="menu-box">
+      <div class="badge">🕵️</div> <!-- ícone grande do detetive -->
+      <h1>LIAR HUNTER</h1> <!-- nome do jogo -->
+      <p class="subtitle">A Detective Interrogation Game</p>
+      <button class="btn big" id="btn-play">▶ Play</button> <!-- vai para a escolha de casos -->
+      <button class="btn" id="btn-howto">📖 How to Play</button> <!-- abre as instruções -->
+      <button class="btn" id="btn-grammar">✏️ Grammar Guide</button> <!-- abre o guia de gramática -->
+      <p class="total" id="menu-total"></p> <!-- pontuação total salva -->
+    </div>
+  </section>
+
+  <!-- ================= TELA 2: ESCOLHA DO CASO ================= -->
+  <section id="screen-cases" class="screen">
+    <div class="menu-box wide">
+      <h2>Choose a Case</h2>
+      <div id="case-list" class="case-list"></div> <!-- os cards dos casos são criados pelo JavaScript -->
+      <button class="btn" data-go="menu">⬅ Back</button> <!-- volta ao menu -->
+    </div>
+  </section>
+
+  <!-- ================= TELA 3: INTERROGATÓRIO ================= -->
+  <section id="screen-game" class="screen">
+    <header class="topbar"> <!-- barra superior com informações -->
+      <h2 id="case-title">Case</h2> <!-- nome do caso atual -->
+      <div class="topbar-right">
+        <span class="counter">❓ Questions left: <b id="questions-left">9</b></span> <!-- contador -->
+        <label class="lens"><input type="checkbox" id="lens-toggle"> 🔍 Grammar Lens</label> <!-- liga/desliga destaque -->
+        <button class="btn small" id="btn-grammar-2">✏️ Grammar</button>
+        <button class="btn small danger" id="btn-accuse">⚖️ Accuse</button> <!-- abre a acusação -->
+      </div>
+    </header>
+
+    <div class="game-grid"> <!-- grade com 3 colunas -->
+      <!-- Coluna 1: arquivo do caso -->
+      <aside class="panel">
+        <h3>📁 Case File</h3>
+        <p id="case-intro" class="intro"></p> <!-- história do caso -->
+        <h4>Facts (always true):</h4>
+        <ul id="clue-list" class="clues"></ul> <!-- pistas -->
+      </aside>
+
+      <!-- Coluna 2: suspeitos e perguntas -->
+      <main class="panel">
+        <h3>👥 Suspects</h3>
+        <div id="suspect-list" class="suspects"></div> <!-- cards dos suspeitos -->
+        <div id="interrogation" class="interrogation"> <!-- área da conversa -->
+          <p class="placeholder">Click on a suspect to start the interrogation.</p>
+        </div>
+      </main>
+
+      <!-- Coluna 3: caderno de anotações -->
+      <aside class="panel">
+        <h3>📒 Notebook</h3>
+        <p class="hint">Every answer goes here. Compare them with the facts!</p>
+        <ol id="notebook" class="notebook"></ol> <!-- respostas anotadas -->
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= TELA 4: RESULTADO ================= -->
+  <section id="screen-result" class="screen">
+    <div class="menu-box wide">
+      <h2 id="result-title">Result</h2> <!-- "Case Closed!" ou "Wrong Person!" -->
+      <div id="result-stars" class="stars"></div> <!-- estrelas -->
+      <p id="result-text"></p> <!-- explicação -->
+      <table class="score-table" id="score-table"></table> <!-- pontuação detalhada -->
+      <p id="result-rank" class="rank"></p> <!-- classificação -->
+      <div class="row">
+        <button class="btn" id="btn-retry">🔁 Try Again</button>
+        <button class="btn" id="btn-next">➡ Next Case</button>
+        <button class="btn" data-go="cases">📂 All Cases</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= JANELA (MODAL) REUTILIZÁVEL ================= -->
+  <div id="modal" class="modal hidden"> <!-- fundo escuro -->
+    <div class="modal-box">
+      <button class="close" id="modal-close">✖</button> <!-- botão fechar -->
+      <div id="modal-content"></div> <!-- conteúdo trocado pelo JavaScript -->
+    </div>
+  </div>
+
+  <script src="data.js"></script>   <!-- 1º carrega os dados dos casos -->
+  <script src="script.js"></script> <!-- 2º carrega a lógica do jogo -->
+</body>
+</html>

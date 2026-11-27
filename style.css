@@ -1,0 +1,170 @@
+/* ============================================================
+   style.css - visual "film noir" (escuro, papel velho, dourado)
+   ============================================================ */
+
+:root {                          /* variáveis de cor reutilizadas no arquivo todo */
+  --bg: #15171c;                 /* fundo geral (quase preto) */
+  --panel: #1f232b;              /* fundo dos painéis */
+  --paper: #f3e9d2;              /* cor de papel velho (caderno) */
+  --ink: #2b2118;                /* cor da "tinta" no papel */
+  --gold: #d4a64a;               /* dourado (destaques) */
+  --text: #e8e6e1;               /* texto claro */
+  --muted: #9aa0ab;              /* texto secundário */
+  --red: #c8503c;                /* vermelho (acusação / erro) */
+  --green: #5fae6e;              /* verde (acerto) */
+  --ps: #3d7be0;                 /* azul  -> Past Simple */
+  --pc: #c2410c;                 /* laranja -> Past Continuous */
+  --cn: #7c3aed;                 /* roxo  -> Connectives */
+}
+
+* { box-sizing: border-box; }    /* largura inclui padding e borda (facilita o layout) */
+
+body {
+  margin: 0;                                         /* tira a margem padrão do navegador */
+  font-family: Georgia, "Times New Roman", serif;    /* fonte serifada, estilo jornal antigo */
+  background: radial-gradient(circle at top, #262a33, var(--bg) 70%); /* fundo com "luz" no topo */
+  color: var(--text);                                /* cor do texto */
+  min-height: 100vh;                                 /* ocupa a altura toda da tela */
+}
+
+/* ---------- Telas: só a tela com .active aparece ---------- */
+.screen { display: none; min-height: 100vh; padding: 20px; }   /* telas escondidas por padrão */
+.screen.active { display: block; }                              /* tela ativa visível */
+#screen-menu.active, #screen-cases.active, #screen-result.active {
+  display: flex; align-items: center; justify-content: center;  /* centraliza a caixa do menu */
+}
+
+/* ---------- Caixa central dos menus ---------- */
+.menu-box {
+  background: var(--panel);                  /* fundo do painel */
+  border: 2px solid var(--gold);             /* borda dourada */
+  border-radius: 14px;                       /* cantos arredondados */
+  padding: 32px;                             /* espaço interno */
+  text-align: center;                        /* centraliza o texto */
+  max-width: 460px; width: 100%;             /* largura máxima */
+  box-shadow: 0 20px 50px rgba(0,0,0,.5);    /* sombra para dar profundidade */
+}
+.menu-box.wide { max-width: 820px; }         /* versão mais larga */
+.badge { font-size: 64px; }                  /* emoji grande */
+h1 { font-size: 46px; letter-spacing: 6px; color: var(--gold); margin: 8px 0; } /* título */
+h2 { color: var(--gold); margin-top: 0; }
+h3 { color: var(--gold); margin: 0 0 10px; font-size: 18px; }
+h4 { margin: 14px 0 6px; color: var(--muted); font-size: 14px; text-transform: uppercase; }
+.subtitle { color: var(--muted); font-style: italic; margin-bottom: 24px; }
+.total { color: var(--gold); margin-top: 18px; }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: block; width: 100%;               /* botão ocupa a linha toda */
+  margin: 8px 0; padding: 12px 16px;         /* espaçamento */
+  font: inherit; font-size: 16px;            /* mesma fonte do resto */
+  color: var(--text);
+  background: #2c313b;
+  border: 1px solid #444b57;
+  border-radius: 8px;
+  cursor: pointer;                           /* mãozinha ao passar o mouse */
+  transition: transform .1s, background .2s; /* animação suave */
+}
+.btn:hover { background: #3a414e; transform: translateY(-1px); } /* efeito ao passar o mouse */
+.btn:disabled { opacity: .4; cursor: not-allowed; transform: none; } /* botão desativado */
+.btn.big { font-size: 20px; background: var(--gold); color: #1b1b1b; font-weight: bold; border: none; }
+.btn.small { display: inline-block; width: auto; margin: 0; padding: 6px 12px; font-size: 14px; }
+.btn.danger { background: var(--red); border-color: var(--red); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }   /* botões lado a lado */
+.row .btn { flex: 1; min-width: 140px; }
+
+/* ---------- Lista de casos ---------- */
+.case-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.case-card {
+  background: var(--paper); color: var(--ink);  /* card de papel */
+  border-radius: 10px; padding: 16px; text-align: left;
+  cursor: pointer; border: 3px solid transparent;
+  transition: transform .15s;
+}
+.case-card:hover { transform: rotate(-1deg) scale(1.02); border-color: var(--gold); } /* "inclina" o papel */
+.case-card h3 { color: var(--ink); }
+.case-card .level { font-size: 13px; font-weight: bold; text-transform: uppercase; }
+.case-card .best { margin-top: 8px; font-size: 14px; }
+
+/* ---------- Barra superior do jogo ---------- */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center; /* título à esquerda, botões à direita */
+  flex-wrap: wrap; gap: 10px;
+  background: var(--panel); border-bottom: 2px solid var(--gold);
+  padding: 12px 18px; border-radius: 10px; margin-bottom: 16px;
+}
+.topbar h2 { margin: 0; }
+.topbar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.counter b { color: var(--gold); font-size: 20px; }
+.lens { cursor: pointer; user-select: none; }
+
+/* ---------- Grade de 3 colunas ---------- */
+.game-grid { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 16px; }
+@media (max-width: 1000px) { .game-grid { grid-template-columns: 1fr; } } /* em telas pequenas vira 1 coluna */
+.panel { background: var(--panel); border-radius: 10px; padding: 16px; border: 1px solid #333944; }
+.intro { line-height: 1.5; }
+.clues { padding-left: 18px; line-height: 1.5; }
+.clues li { margin-bottom: 8px; background: rgba(212,166,74,.1); padding: 6px 8px; border-radius: 6px; list-style: "📌 "; }
+.hint { color: var(--muted); font-size: 14px; font-style: italic; }
+
+/* ---------- Suspeitos ---------- */
+.suspects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.suspect {
+  background: #2a2f38; border: 2px solid #3b414d; border-radius: 10px;
+  padding: 10px; text-align: center; cursor: pointer; transition: border-color .2s;
+}
+.suspect:hover { border-color: var(--muted); }
+.suspect.selected { border-color: var(--gold); background: #343a45; }  /* suspeito escolhido */
+.suspect .avatar { font-size: 40px; }
+.suspect .name { font-weight: bold; }
+.suspect .role { font-size: 13px; color: var(--muted); }
+
+/* ---------- Área do interrogatório ---------- */
+.interrogation { min-height: 200px; }
+.placeholder { color: var(--muted); text-align: center; margin-top: 40px; }
+.question-btn { text-align: left; }
+.question-btn.asked { opacity: .5; text-decoration: line-through; } /* pergunta já feita */
+.dialog { margin-top: 12px; }
+.bubble { padding: 10px 14px; border-radius: 12px; margin: 8px 0; line-height: 1.5; position: relative; }
+.bubble.you { background: #2f4a6b; margin-left: 20%; }            /* fala do detetive (direita) */
+.bubble.them { background: var(--paper); color: var(--ink); margin-right: 10%; } /* fala do suspeito */
+.speak { border: none; background: none; cursor: pointer; font-size: 16px; } /* botão de áudio 🔊 */
+
+/* ---------- Caderno ---------- */
+.notebook {
+  background: var(--paper); color: var(--ink);
+  border-radius: 8px; padding: 12px 12px 12px 32px;
+  min-height: 120px; max-height: 60vh; overflow-y: auto;   /* rolagem se ficar grande */
+  background-image: repeating-linear-gradient(var(--paper) 0 27px, #d9cba8 27px 28px); /* linhas de caderno */
+  line-height: 28px; font-size: 14px;
+}
+.notebook li { margin: 0; } /* sem margem: o texto fica em cima das linhas do caderno */
+.notebook .who { font-weight: bold; }
+
+/* ---------- Grammar Lens: cores só aparecem quando body tem .lens-on ---------- */
+.lens-on .g-ps { color: var(--ps); font-weight: bold; border-bottom: 2px solid var(--ps); }
+.lens-on .g-pc { color: var(--pc); font-weight: bold; border-bottom: 2px solid var(--pc); }
+.lens-on .g-cn { color: var(--cn); font-weight: bold; font-style: italic; }
+.legend span { display: inline-block; margin-right: 10px; font-weight: bold; }
+.legend .ps { color: var(--ps); } .legend .pc { color: var(--pc); } .legend .cn { color: var(--cn); }
+
+/* ---------- Modal (janela por cima) ---------- */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; z-index: 10; padding: 20px; }
+.modal.hidden { display: none; }
+.modal-box {
+  background: var(--panel); border: 2px solid var(--gold); border-radius: 14px;
+  padding: 26px; max-width: 640px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
+  line-height: 1.6;
+}
+.close { position: absolute; top: 10px; right: 12px; background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
+.choice { text-align: left; }
+.choice.selected { border-color: var(--gold); background: #4a4230; }
+.example { background: #2a2f38; padding: 8px 12px; border-radius: 6px; margin: 6px 0; }
+
+/* ---------- Resultado ---------- */
+.stars { font-size: 44px; letter-spacing: 6px; color: var(--gold); } /* estrelas douradas */
+.score-table { margin: 16px auto; border-collapse: collapse; min-width: 300px; }
+.score-table td { padding: 6px 12px; border-bottom: 1px solid #3b414d; text-align: left; }
+.score-table td:last-child { text-align: right; font-weight: bold; color: var(--gold); }
+.rank { font-size: 20px; color: var(--gold); }
+.good { color: var(--green); } .bad { color: var(--red); }
