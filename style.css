@@ -85,6 +85,12 @@ h4 { margin: 14px 0 6px; color: var(--muted); font-size: 14px; text-transform: u
 .case-card h3 { color: var(--ink); }
 .case-card .level { font-size: 13px; font-weight: bold; text-transform: uppercase; }
 .case-card .best { margin-top: 8px; font-size: 14px; }
+.case-card .info { font-size: 13px; margin-top: 6px; }                   /* nº de suspeitos e perguntas */
+.case-card .faces { font-size: 22px; margin-top: 4px; }                  /* rostinhos dos suspeitos */
+.level-easy .level { color: #2f7d3a; }                                   /* verde = fácil */
+.level-medium .level { color: #a06a00; }                                 /* amarelo = médio */
+.level-hard { border-color: var(--red); }                                /* casos difíceis com borda vermelha */
+.level-hard .level { color: var(--red); }                                /* vermelho = difícil */
 
 /* ---------- Barra superior do jogo ---------- */
 .topbar {
@@ -96,6 +102,7 @@ h4 { margin: 14px 0 6px; color: var(--muted); font-size: 14px; text-transform: u
 .topbar h2 { margin: 0; }
 .topbar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .counter b { color: var(--gold); font-size: 20px; }
+.counter b.low { color: var(--red); }                  /* contador fica vermelho quando sobram 3 ou menos */
 .lens { cursor: pointer; user-select: none; }
 
 /* ---------- Grade de 3 colunas ---------- */
@@ -108,7 +115,7 @@ h4 { margin: 14px 0 6px; color: var(--muted); font-size: 14px; text-transform: u
 .hint { color: var(--muted); font-size: 14px; font-style: italic; }
 
 /* ---------- Suspeitos ---------- */
-.suspects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.suspects { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 14px; } /* cabe 3, 4 ou 5 suspeitos */
 .suspect {
   background: #2a2f38; border: 2px solid #3b414d; border-radius: 10px;
   padding: 10px; text-align: center; cursor: pointer; transition: border-color .2s;
@@ -118,6 +125,7 @@ h4 { margin: 14px 0 6px; color: var(--muted); font-size: 14px; text-transform: u
 .suspect .avatar { font-size: 40px; }
 .suspect .name { font-weight: bold; }
 .suspect .role { font-size: 13px; color: var(--muted); }
+.suspect .asked-count { font-size: 12px; color: var(--gold); margin-top: 4px; } /* "2/5 asked" */
 
 /* ---------- Área do interrogatório ---------- */
 .interrogation { min-height: 200px; }
@@ -158,6 +166,7 @@ h4 { margin: 14px 0 6px; color: var(--muted); font-size: 14px; text-transform: u
 }
 .close { position: absolute; top: 10px; right: 12px; background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
 .choice { text-align: left; }
+.modal-box h4 { color: var(--gold); }                  /* subtítulos dentro do modal */
 .choice.selected { border-color: var(--gold); background: #4a4230; }
 .example { background: #2a2f38; padding: 8px 12px; border-radius: 6px; margin: 6px 0; }
 
